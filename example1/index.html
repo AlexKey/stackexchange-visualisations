@@ -2,13 +2,32 @@
 <html>
 <head>
 
-	<title>Example 1</title>
+	<title>Scatterplot showing Stackoverflow questions (y) to answers (x) to reputation (radius / color) ratios.</title>	
 	<script src="../bower_components/d3/d3.js" type="text/javascript" charset="utf-8"></script>
-	<script src="init.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+		body {
+		  font: 10px sans-serif;
+		}
+
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: #dedede;
+		  shape-rendering: crispEdges;
+		}
+
+		.dot {
+		  stroke: #4d4d4d;
+		}
+		
+		svg {
+			border: solid 1px #efefef;
+		}	
+	</style>
 </head>
 <body>
-
+	<h1>Scatterplot showing Stackoverflow questions (y) to answers (x) to reputation (radius / color) ratios.</h1>
 	
-	
+	<script src="init.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
