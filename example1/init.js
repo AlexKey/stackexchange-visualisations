@@ -5,16 +5,15 @@ var data = d3.csv("../data/QueryResults.csv")
 	
 var margin = {top: 20, right: 40, bottom: 30, left: 60},
     width = 960 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom,
+	pointMaxSize = 45;
 
-var x = d3.scale.linear()
-    .range([0, width]);
+var x = d3.scale.linear();
 
-var y = d3.scale.linear()
-    .range([height, 0]);
+var y = d3.scale.linear();
 
 var size = d3.scale.linear()
-	.range([1, 50]);
+	.range([1, pointMaxSize]);
 
 var color = d3.scale.linear()
 					.range(['white','darkred']);
@@ -37,6 +36,15 @@ var svg = d3.select("body").append("svg")
 
 	    x.domain(d3.extent(rows, function(d) { return d.Answers; })).nice();
 	    y.domain(d3.extent(rows, function(d) { return d.Questions; })).nice();
+		
+		//make it so the points don't overlap the axis
+		// extend the domain using invert (with the default range [0, 1]) to ensure the points don't overlap the axis
+		x.domain([-.1, 1].map(x.invert))
+		    			   .range([0, width]); //use the real range
+			
+		y.domain([-.1, 1].map(y.invert))
+			        	.range([height, 0]);
+		
 		size.domain(d3.extent(rows, function(d) { return d.Reputation; })).nice();
 		color.domain(d3.extent(rows, function(d) { return d.Reputation; })).nice();
 		
@@ -71,6 +79,10 @@ var svg = d3.select("body").append("svg")
 			.attr("cx", function(d) { return x(d.Answers); })
 			.attr("cy", function(d) { return y(d.Questions); })
 			.style("fill", function(d) { return color(d.Reputation); });
+			
+			
+			//remove the -200 axis (could improve later by using the sizzle :contains() selector
+			svg.selectAll("body > svg > g > g.y.axis > g:nth-child(1) > text").remove();
 
 	
 	});
