@@ -1,10 +1,10 @@
 var data = d3.csv("../data/QueryResults.csv")
 	.row(function(d) { return {UserId: +d.UserId, Questions: +d.Questions, Answers: +d.Answers, Reputation: +d.Reputation}; }); //+ converts the string to a number and is faster than parsing
 
-var margin = {top: 20, right: 70, bottom: 120, left: 90},
+var margin = {top: 20, right: 80, bottom: 120, left: 90},
     width = window.innerWidth - margin.left - margin.right,
     height = window.innerHeight - margin.top - margin.bottom,
-	pointMaxSize = 100;
+	pointMaxSize = 120;
 
 var x = d3.scale.linear()
 				.range([0, width]);
@@ -42,6 +42,8 @@ var svg = d3.select("body").append("svg")
 	    y.domain(d3.extent(rows, function(d) { return d.Questions; })).nice();	        	
 		size.domain(d3.extent(rows, function(d) { return d.Reputation; })).nice();
 		color.domain(d3.extent(rows, function(d) { return d.Reputation; }));			
+		
+		colorlegend("#linearLegend", color, "linear", {title: "Reputation", boxHeight: 50, boxWidth: 100, linearBoxes: 5});
 
 		svg.selectAll(".dot")
 			.data(rows)
@@ -59,7 +61,7 @@ var svg = d3.select("body").append("svg")
 			.append("text")
 			.attr("class", "label")
 			.attr("x", width)
-			.attr("y", -10)
+			.attr("y", -15)
 			.style("text-anchor", "end")
 			.text("Answers");
 	
@@ -69,7 +71,7 @@ var svg = d3.select("body").append("svg")
 			.append("text")
 			.attr("class", "label")
 			.attr("transform", "rotate(-90)")
-			.attr("y", 10)
+			.attr("y", 15)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
 			.text("Questions");

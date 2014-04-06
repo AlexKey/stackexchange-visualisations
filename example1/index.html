@@ -4,13 +4,22 @@
 
 	<title>Scatterplot showing Stackoverflow questions (y) to answers (x) to reputation (radius / color) ratios.</title>	
 	<script src="../bower_components/d3/d3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../colorlegend.js" type="text/javascript" charset="utf-8"></script>	
 	<style>
 		body {
-		  font: 10px sans-serif;
+		 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		  padding:0;
 		  margin:0;
 		}
-			
+		
+		h1 {
+			font-family:arial;
+			font-weight:normal;
+			font-size:29px;
+			color:#eee;
+			position:absolute;
+			right:20px;
+		}	
 		
 		.axis path,
 		.axis line {
@@ -34,12 +43,32 @@
 		}
 		
 		svg {
-			border: solid 1px #efefef;
 			background-color:#4d4d4d;
-		}	
+		}
+		
+		.legend {
+		  background-color: #fff;
+		  width: 500px;
+		  height: 50px;
+		  border: 0;
+		  margin:0;
+		  padding:0;
+		  position:absolute;
+		  right:15px;
+		  top:70px;
+	  }
+
+		.colorlegend-labels, .colorlegend-title  {
+		  font-size: 12px;
+		  fill: #efefef;
+		}
+		
+		
 	</style>
 </head>
-<body>	
+<body>
+	<h1>Stackoverflow questions, answers &amp; reputation (top 50,000 users)</h1>
+	<div id="linearLegend" class="legend"></div>
 	<script src="init.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
