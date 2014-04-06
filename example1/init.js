@@ -47,25 +47,6 @@ var svg = d3.select("body").append("svg")
 		
 		colorlegend("#linearLegend", color, "linear", {title: "Reputation", boxHeight: 50, boxWidth: 100, linearBoxes: 5});
 
-		//attaching mouse listener to the svg element hoping it will improve performance
-		svg.on("mousemove", function(d) {
-			
-			if(d3.event.target.tagName === 'circle') {		
-				var circle = d3.select(d3.event.target);
-				var data = circle.data()[0];
-				tooltip.style("visibility", "visible");
-				tooltip.select("#Questions").text(data.Questions);
-				tooltip.select("#Answers").text(data.Answers);
-				tooltip.select("#Reputation").text(data.Reputation);
-				
-				tooltip.style("-webkit-transform", "translate3d(" + d3.event.pageX  + "px," + d3.event.pageY + "px, 0)") ;
-				
-			} else {
-					tooltip.style("visibility", "hidden");
-			}
-			
-		});
-
 		svg.selectAll(".dot")
 			.data(rows)
 			.enter().append("circle")
@@ -73,7 +54,10 @@ var svg = d3.select("body").append("svg")
 			.attr("r", function(d) {return size(d.Reputation); })
 			.attr("cx", function(d) { return x(d.Answers); })
 			.attr("cy", function(d) { return y(d.Questions); })
-			.style("fill", function(d) { return color(d.Reputation); });
+			.style("fill", function(d) { return color(d.Reputation); })
+		    .append("svg:title") //any sort of hiding showing DOM based tooltips is causing performance problems with this many nodes, so using 'title' instead
+		    .text(function(d, i) { return "Questions: " + d.Questions + " Answers: " + d.Answers + " Reputation: " + d.Reputation; });
+			
 			
 	    svg.append("g")
 			.attr("class", "x axis")
