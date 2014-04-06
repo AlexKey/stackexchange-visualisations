@@ -49,20 +49,21 @@ var svg = d3.select("body").append("svg")
 
 		//attaching mouse listener to the svg element hoping it will improve performance
 		svg.on("mousemove", function(d) {
-
-			if(d3.event.target.tagName == 'circle') {		
+			
+			if(d3.event.target.tagName === 'circle') {		
 				var circle = d3.select(d3.event.target);
 				var data = circle.data()[0];
 				tooltip.style("visibility", "visible");
 				tooltip.select("#Questions").text(data.Questions);
 				tooltip.select("#Answers").text(data.Answers);
 				tooltip.select("#Reputation").text(data.Reputation);
-				tooltip.style("top", (d3.event.pageY)+"px");
-				tooltip.style("left",(d3.event.pageX)+"px");
+				
+				tooltip.style("-webkit-transform", "translate3d(" + d3.event.pageX  + "px," + d3.event.pageY + "px, 0)") ;
 				
 			} else {
 					tooltip.style("visibility", "hidden");
 			}
+			
 		});
 
 		svg.selectAll(".dot")
