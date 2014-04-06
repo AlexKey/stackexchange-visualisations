@@ -1,30 +1,34 @@
 var data = d3.csv("../data/QueryResults.csv")
 	.row(function(d) { return {UserId: +d.UserId, Questions: +d.Questions, Answers: +d.Answers, Reputation: +d.Reputation}; }); //+ converts the string to a number and is faster than parsing
 
-	
-	
-var margin = {top: 20, right: 40, bottom: 30, left: 60},
-    width = 960 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom,
-	pointMaxSize = 45;
+var margin = {top: 20, right: 70, bottom: 120, left: 90},
+    width = window.innerWidth - margin.left - margin.right,
+    height = window.innerHeight - margin.top - margin.bottom,
+	pointMaxSize = 100;
 
-var x = d3.scale.linear();
+var x = d3.scale.linear()
+				.range([0, width]);
 
-var y = d3.scale.linear();
+var y = d3.scale.linear()
+				.range([height, 0]);
 
 var size = d3.scale.linear()
 	.range([1, pointMaxSize]);
 
 var color = d3.scale.linear()
-					.range(['white','darkred']);
+					.range(['#F4C435', '#7F0201']);
 					
 var xAxis = d3.svg.axis()
     .scale(x)
-    .orient("bottom");
+    .orient("bottom")
+	.tickPadding(45)
+	.innerTickSize(30);
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left");
+    .orient("left")
+	.tickPadding(20)
+	.innerTickSize(15);
 		
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -35,41 +39,9 @@ var svg = d3.select("body").append("svg")
 	data.get(function(error, rows) { 
 
 	    x.domain(d3.extent(rows, function(d) { return d.Answers; })).nice();
-	    y.domain(d3.extent(rows, function(d) { return d.Questions; })).nice();
-		
-		//make it so the points don't overlap the axis
-		// extend the domain using invert (with the default range [0, 1]) to ensure the points don't overlap the axis
-		x.domain([-.1, 1].map(x.invert))
-		    			   .range([0, width]); //use the real range
-			
-		y.domain([-.1, 1].map(y.invert))
-			        	.range([height, 0]);
-		
+	    y.domain(d3.extent(rows, function(d) { return d.Questions; })).nice();	        	
 		size.domain(d3.extent(rows, function(d) { return d.Reputation; })).nice();
-		color.domain(d3.extent(rows, function(d) { return d.Reputation; })).nice();
-		
-	    svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", "translate(0," + height + ")")
-			.call(xAxis)
-			.append("text")
-			.attr("class", "label")
-			.attr("x", width)
-			.attr("y", -6)
-			.style("text-anchor", "end")
-			.text("Answers");
-		
-		svg.append("g")
-			.attr("class", "y axis")
-			.call(yAxis)
-			.append("text")
-			.attr("class", "label")
-			.attr("transform", "rotate(-90)")
-			.attr("y", 2)
-			.attr("dy", ".71em")
-			.style("text-anchor", "end")
-			.text("Questions");
-			
+		color.domain(d3.extent(rows, function(d) { return d.Reputation; }));			
 
 		svg.selectAll(".dot")
 			.data(rows)
@@ -80,9 +52,26 @@ var svg = d3.select("body").append("svg")
 			.attr("cy", function(d) { return y(d.Questions); })
 			.style("fill", function(d) { return color(d.Reputation); });
 			
-			
-			//remove the -200 axis (could improve later by using the sizzle :contains() selector
-			svg.selectAll("body > svg > g > g.y.axis > g:nth-child(1) > text").remove();
-
+	    svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis)
+			.append("text")
+			.attr("class", "label")
+			.attr("x", width)
+			.attr("y", -10)
+			.style("text-anchor", "end")
+			.text("Answers");
 	
+		svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis)
+			.append("text")
+			.attr("class", "label")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 10)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("Questions");
+			
 	});

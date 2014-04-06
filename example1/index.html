@@ -7,27 +7,39 @@
 	<style>
 		body {
 		  font: 10px sans-serif;
+		  padding:0;
+		  margin:0;
 		}
-
+			
+		
 		.axis path,
 		.axis line {
 		  fill: none;
 		  stroke: #dedede;
 		  shape-rendering: crispEdges;
 		}
+		
+		.axis text {
+			fill:#ffffff;
+			font-size:14px;
+			 filter: drop-shadow( -5px -5px 5px #000 ); 
+		}
+		
+		.axis text.label {
+			font-size:28px;
+		}
 
 		.dot {
-		  stroke: #4d4d4d;
+		  stroke: rgba(80, 80, 80, 0.3);
 		}
 		
 		svg {
 			border: solid 1px #efefef;
+			background-color:#4d4d4d;
 		}	
 	</style>
 </head>
-<body>
-	<h1>Scatterplot showing Stackoverflow questions (y) to answers (x) to reputation (radius / color) ratios.</h1>
-	
+<body>	
 	<script src="init.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
