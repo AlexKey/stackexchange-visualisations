@@ -6,13 +6,12 @@
 	<script src="../bower_components/d3/d3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../colorlegend.js" type="text/javascript" charset="utf-8"></script>	
 	<style>
-	
-		
-	
+
 		body {
-		 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		  padding:0;
-		  margin:0;
+		  	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		  	padding:0;
+		  	margin:0;
+		  	background-color:#4d4d4d;
 		}
 		
 		h1 {
@@ -20,22 +19,20 @@
 			font-weight:normal;
 			font-size:29px;
 			color:#eee;
-			position:absolute;
+			position:absolute; /*take out of the flow of the document to help repaints*/
+			top:5px;
 			right:20px;
-			float:right;
 		}	
 		
 		.axis path,
 		.axis line {
 		  fill: none;
 		  stroke: #dedede;
-		  /*shape-rendering: crispEdges;*/
 		}
 		
 		.axis text {
 			fill:#ffffff;
 			font-size:14px;
-			 /*filter: drop-shadow( -5px -5px 5px #000 ); */
 		}
 		
 		.axis text.label {
@@ -59,7 +56,7 @@
 		}
 		
 		.legend {
-		  background-color: #fff;
+		  background-color: #4d4d4d;
 		  width: 500px;
 		  height: 50px;
 		  border: 0;
@@ -75,6 +72,13 @@
 		  fill: #efefef;
 		}
 		
+		#loading {
+			color:white;
+			text-align:center;
+			margin:30% auto 0 auto;
+			height:50px;
+		}
+		
 		
 		
 	</style>
@@ -82,6 +86,7 @@
 <body>
 	<h1>Stackoverflow questions, answers &amp; reputation (top 50,000 users)</h1>
 	<div id="linearLegend" class="legend"></div>
+	<div id="loading">loading...</div>
 	<script src="init.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

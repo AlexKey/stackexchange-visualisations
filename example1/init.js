@@ -80,5 +80,7 @@ var svg = d3.select("body").append("svg")
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
 			.text("Questions");
-			
+		
+			d3.select("#loading").style("display", "none");
+		
 	});
