@@ -42,6 +42,11 @@
 		  stroke: rgba(80, 80, 80, 0.3);
 		}
 		
+		.dot:hover {
+		  stroke: rgba(200, 200, 200, 0.7);
+		  stroke-width: 3;
+		}
+		
 		svg {
 			background-color:#4d4d4d;
 		}
@@ -63,12 +68,30 @@
 		  fill: #efefef;
 		}
 		
+		#hoverDescription {
+			width:150px;
+			height:58px;
+			background: linear-gradient(135deg, rgba(250,250,250,1) 0%, rgba(240,240,240,1) 47%, rgba(232,232,232,1) 100%);
+			color:#4d4d4d;
+			position:absolute;
+			top:200px;
+			padding:10px;
+			border-radius:10px;
+			box-shadow: 5px 5px 15px #222222;
+			visibility: hidden;
+		}
+		
 		
 	</style>
 </head>
 <body>
 	<h1>Stackoverflow questions, answers &amp; reputation (top 50,000 users)</h1>
 	<div id="linearLegend" class="legend"></div>
+	<div id="hoverDescription" class="show">
+		Questions: <span id="Questions"></span> <br />
+		Answers: <span id="Answers"></span> <br />
+		Reputation: <span id="Reputation"></span> <br />
+	</div>
 	<script src="init.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

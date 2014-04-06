@@ -36,6 +36,8 @@ var svg = d3.select("body").append("svg")
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
+	var tooltip = d3.select("#hoverDescription");
+	
 	data.get(function(error, rows) { 
 
 	    x.domain(d3.extent(rows, function(d) { return d.Answers; })).nice();
@@ -52,7 +54,21 @@ var svg = d3.select("body").append("svg")
 			.attr("r", function(d) {return size(d.Reputation); })
 			.attr("cx", function(d) { return x(d.Answers); })
 			.attr("cy", function(d) { return y(d.Questions); })
-			.style("fill", function(d) { return color(d.Reputation); });
+			.style("fill", function(d) { return color(d.Reputation); })
+			.on("mouseover", function(){
+				 tooltip.style("visibility", "visible");
+			})
+			.on("mousemove", function(d){
+				
+				tooltip.select("#Questions").text(d.Questions);
+				tooltip.select("#Answers").text(d.Answers);
+				tooltip.select("#Reputation").text(d.Reputation);
+				
+				
+				tooltip.style("top", (d3.event.pageY)+"px");
+				tooltip.style("left",(d3.event.pageX)+"px");
+			})
+			.on("mouseout", function(){ return tooltip.style("visibility", "hidden"); });
 			
 	    svg.append("g")
 			.attr("class", "x axis")
